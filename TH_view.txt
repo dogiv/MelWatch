@@ -1,0 +1,156 @@
+! test comments
+
+ ! keywords you shouldn't use for curve titles: units, t_unit, xmin, xmax, ymin, ymax, scale, offset, tail, off
+ ! also, titles should not contain spaces, dashes, or other symbols that could be confused with python operators. Underscore is okay.
+KKLscen5.ptf  -- (PlotVariable, GraphTitle, xmin(optional) [s], xmax [s], ymin, ymax, scale, offset, tail)
+
+plot "RPV Pressure"   ymin 0. ymax 8.e6
+CVH-P.190		RPVpressure
+
+plot "Containment Pressure" 
+CVH-P.201       Drywell
+CVH-P.308       Dome
+CVH-P.400       ShieldBldg
+CVH-P.404       AuxBldg
+
+plot "Wetwell Mass"
+CVH-MASS.305    WWmass units   kg
+
+plot "Core/Recirc Flow" tail 250
+FL-MFLOW.110	Core
+FL-MFLOW.115	Recirc1
+FL-MFLOW.116	Recirc2
+
+plot "Containment Temps"
+CVH-TLIQ.305	WetwellTemp
+CVH-TSAT(P).305	WetwellTsat
+CVH-TVAP.201    DrywellVap  
+
+plot "Containment Levels"
+CVH-CLIQLEV.201 Drywell
+CVH-CLIQLEV.305 Wetwell
+CVH-CLIQLEV.200 Cavity
+! horizontal lines to show where the bottom of each of these compartments is
+hline,-9.69     WWbottom    units   m
+hline,-6.46     DWbottom    units   m
+hline,-8.77     CavBottom   units   m
+CAV-MINALT.1    CavDepth    scale -1.0
+
+
+
+plot "RPV Levels"
+
+CVH-LIQLEV.120  LowerPlen                   off ! off means it will get read in from the file but not actually plotted
+CVH-LIQLEV.131  Core_01     offset -5.136   off
+CVH-LIQLEV.132  Core_02     offset -6.125   off
+CVH-LIQLEV.133  Core_03     offset -7.268   off
+CVH-LIQLEV.134  Core_04     offset -8.411   off
+CVH-LIQLEV.139  SHR_D_1     offset -9.3713  off
+CVH-LIQLEV.180  SEPAR_OR    offset  -11.12  off
+CVH-LIQLEV.190  STEAM_DOME  offset  -15.295 off
+formula "CoreSwolR1" "LowerPlen + Core_01 + Core_02 + Core_03 + Core_04 + SHR_D_1 + SEPAR_OR + STEAM_DOME"  units m
+
+CVH-CLIQLEV.120  CLowerPlen                   off ! off means it will get read in from the file but not actually plotted
+CVH-CLIQLEV.131  CCore_01     offset -5.136   off
+CVH-CLIQLEV.132  CCore_02     offset -6.125   off
+CVH-CLIQLEV.133  CCore_03     offset -7.268   off
+CVH-CLIQLEV.134  CCore_04     offset -8.411   off
+CVH-CLIQLEV.139  CSHR_D_1     offset -9.3713  off
+CVH-CLIQLEV.180  CSEPAR_OR    offset  -11.12  off
+CVH-CLIQLEV.190  CSTEAM_DOME  offset  -15.295 off
+formula "CoreColapR1" "CLowerPlen + CCore_01 + CCore_02 + CCore_03 + CCore_04 + CSHR_D_1 + CSEPAR_OR + CSTEAM_DOME" units m
+
+CVH-LIQLEV.110  DC_LOW                      
+CVH-LIQLEV.112  DC_MID      offset  -8.467  off
+CVH-LIQLEV.185  DC_UP       offset  -11.12  off
+formula "Downcomer" "DC_LOW + DC_MID + DC_UP"   units m off
+
+hline,4.91      BAF         units   m
+hline,8.72      TAF         units   m
+hline,12.90     Nominal     units   m
+
+
+
+
+plot "Power"    ymin 0  ymax 300.e6
+COR-EFPD-RAT    corefpdrat
+DCH-COREPOW     dchcorepow
+DCH-TOTCLSPOW   dchtotclspow
+RN1-DHTOT       RN1-DHTOT
+RN1-DHCOR       RN1-DHCOR
+
+plot "Peak Cladding Temp"
+CFVALU.60009    PCT units   K
+
+plot "Fuel Temps"
+COR-TFU.117		Ring1Top
+COR-TFU.113     Ring1Mid
+COR-TFU.108     Ring1Low
+COR-TFU.317     Ring3Top
+COR-TFU.313     Ring3Mid
+COR-TFU.308     Ring3Low
+COR-TFU.517     Ring5Top
+COR-TFU.513     Ring5Mid
+COR-TFU.508     Ring5Low
+
+plot "Core Plate and Lower Head Temps"
+COR-TSS.106     CorePlateR1
+COR-TSS.306     CorePlateR3
+COR-TSS.506     CorePlateR5
+COR-TLH.101     LH1in 
+COR-TLH.106     LH1out
+COR-TLH.301     LH3in
+COR-TLH.306     LH3out
+COR-TLH.501     LH5in   
+COR-TLH.506     LH5out
+COR-TLH.601     LH6in
+COR-TLH.606     LH6out
+COR-TLH.801     LH8in
+COR-TLH.806     LH8out
+COR-TLH.1001    LH10in
+COR-TLH.1006    LH10out
+
+plot "Particulate Debris Temps"
+COR-TPD.101     COR-TPD.101
+COR-TPD.107     COR-TPD.107
+COR-TPD.112     COR-TPD.112
+COR-TPD.116     COR-TPD.116
+COR-TPD.207     COR-TPD.207
+COR-TPD.307     COR-TPD.307
+COR-TPD.312     COR-TPD.312
+COR-TPD.316     COR-TPD.316
+COR-TPD.407     COR-TPD.407
+COR-TPD.507     COR-TPD.507
+COR-TPD.512     COR-TPD.512
+COR-TPD.516     COR-TPD.516
+
+plot "In-Vessel H2 and Burns"
+COR-DMH2-TOT	ivH2gen
+BUR-H2-TOT.201  BurntDW
+BUR-H2-TOT.200  BurntCav
+BUR-H2-TOT.305  BurntWW
+BUR-H2-TOT.308  BurntDome
+
+plot "Break & Containment Failure Flows"
+FL-MFLOW.223	DWtoCont
+FL-MFLOW.400	ContToEnv
+FL-MFLOW.940	ShldToAux
+FL-MFLOW.4400	ShldToEnv
+FL-MFLOW.40411	AuxToEnv
+FL-MFLOW.2201	RHRtoAux
+FL-MFLOW.3.2201	RHRstm
+FL-MFLOW.120	MSLrupt1
+FL-MFLOW.121	MSLrupt2
+FL-MFLOW.403    FCVSfilt
+FL-MFLOW.1403   FCVSunfil
+
+plot "Systems"
+CFVALU.1020     FWflow  units   kg/s
+CFVALU.1120     CRDinj  units   kg/s
+FL-MFLOW.2425   RCIC    
+CFVALU.5376     SEHRRCCC   units   kg/s
+CFVALU.5216     SEHR_CC units   kg/s
+CFVALU.4454     LPCS    units   kg/s
+CFVALU.4254     HPCS    units   kg/s
+CFVALU.4954     RHRminj units   kg/s
+FL-MFLOW.199    PassiveFW
